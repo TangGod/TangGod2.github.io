@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang=zh-Hans>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="note">
+  <meta name="keywords" content="">
+  
+    <link rel="icon" href="/favicon.ico">
+  
+    
+  <title>Netty——基本概念 | TangGodBlogs</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+  <div class="header-container">
+    <a class='logo' href="/">
+      <span>TangGodBlogs</span>
+    </a>
+    <ul class="right-header">
+      
+        <li class="nav-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+</header>
+
+  <main id='post'>
+  <div class="content">
+    <article>
+        <section class="content markdown-body">
+          <h1>Netty——基本概念</h1>
+          <div class='post-meta'>
+            <i class="fa fa-calendar" aria-hidden="true"></i> <time>2018/07/26</time>
+            
+              | <i class="fa fa-folder-open-o" aria-hidden="true"></i> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/网络/">网络</a>
+  </div>
+
+
+
+            
+            
+          </div>
+          <p>1.为什么选择Netty</p>
+<p>java Socket 短连接和长连接的区别</p>
+<p>上一篇文章(连接)我们已经了解了Socket通信（IO/NIO/AIO）编程，对于通信模型已经有了一个基本的认识。其实上一篇文章中，我们学习的仅仅是一个模型，如果想把这些真正的用于实际工作中，那么还需要不断的完善、扩展和优化。比如经典的TCP读包写包问题，或者是数据接收的大小，实际的通信处理与应答的处理逻辑等等一些细节问题需要认真的去思考，而这些都需要大量的时间和经历，以及丰富的经验。所以想学好Socket通信不是件容易事，那么接下来就来学习一下新的技术Netty，为什么会选择Netty？因为它简单！使用Netty不必编写复杂的逻辑代码去实现通信，再也不需要去考虑性能问题，不需要考虑编码问题，半包读写等问题。强大的Netty已经帮我们实现好了，我们只需要使用即可。</p>
+<p>Netty是最流行的NIO框架，它的健壮性、功能、性能、可定制性和可扩展性在同类框架都是首屈一指的。它已经得到成百上千的商业/商用项目验证，如Hadoop的RPC框架Avro、RocketMQ以及主流的分布式通信框架Dubbox等等。</p>
+<p>2.Netty简介</p>
+<p>Netty是基于Java NIO client-server的网络应用框架，使用Netty可以快速开发网络应用，例如服务器和客户端协议。Netty提供了一种新的方式来开发网络应用程序，这种新的方式使它很容易使用和具有很强的扩展性。Netty的内部实现是很复杂的，但是Netty提供了简单易用的API从网络处理代码中解耦业务逻辑。Netty是完全基于NIO实现的，所以整个Netty都是异步的。</p>
+<p>网络应用程序通常需要有较高的可扩展性，无论是Netty还是其他的基于Java Nio的框架，都会提供可扩展性的解决方案。Netty中一个关键组成部分是它的异步特性，本片文章将讨论同步（阻塞）和异步（非阻塞）的IO来说明为什么使用异步代码解决扩展性问题以及如何使用异步。</p>
+<p>3.Netty架构组成（借用一下网上的图片）<br><img src="/2018/07/26/Netty——基本概念/1.png" alt="这里写图片描述"></p>
+<p>Netty实现原理浅析，写的很不错，感兴趣的可以看一下。</p>
+<p>4.NIO的通信步骤：</p>
+<p>①创建ServerSocketChannel，为其配置非阻塞模式。</p>
+<p>②绑定监听，配置TCP参数，录入backlog大小等。</p>
+<p>③创建一个独立的IO线程，用于轮询多路复用器Selector。</p>
+<p>④创建Selector，将之前创建的ServerSocketChannel注册到Selector上，并设置监听标识位SelectionKey.OP_ACCEPT。</p>
+<p>⑤启动IO线程，在循环体中执行Selector.select()方法，轮询就绪的通道。</p>
+<p>⑥当轮询到处于就绪状态的通道时，需要进行操作位判断，如果是ACCEPT状态，说明是新的客户端接入，则调用accept方法接收新的客户端。</p>
+<p>⑦设置新接入客户端的一些参数，如非阻塞，并将其继续注册到Selector上，设置监听标识位等。</p>
+<p>⑧如果轮询的通道标识位是READ，则进行读取，构造Buffer对象等。</p>
+<p>⑨更细节的问题还有数据没发送完成继续发送的问题……</p>
+<p>好啦，开始学习Netty了。先去<a href="http://netty.io/上下载所有的Netty包。" target="_blank" rel="noopener">http://netty.io/上下载所有的Netty包。</a></p>
+<p>Netty通信的步骤：</p>
+<p>①创建两个NIO线程组，一个专门用于网络事件处理（接受客户端的连接），另一个则进行网络通信的读写。</p>
+<p>②创建一个ServerBootstrap对象，配置Netty的一系列参数，例如接受传出数据的缓存大小等。</p>
+<p>③创建一个用于实际处理数据的类ChannelInitializer，进行初始化的准备工作，比如设置接受传出数据的字符集、格式以及实际处理数据的接口。</p>
+<p>④绑定端口，执行同步阻塞方法等待服务器端启动即可。</p>
+<p>强烈推荐读一读Netty官方翻译文档。</p>
+<p>5.TCP粘包、拆包问题</p>
+<p>熟悉TCP编程的可能都知道，无论是服务器端还是客户端，当我们读取或者发送数据的时候，都需要考虑TCP底层的粘包/拆包机制。</p>
+<p>TCP是一个“流”协议，所谓流就是没有界限的遗传数据。大家可以想象一下，如果河水就好比数据，他们是连成一片的，没有分界线，TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的具体情况进行包的划分，也就是说，在业务上一个完整的包可能会被TCP分成多个包进行发送，也可能把多个小包封装成一个大的数据包发送出去，这就是所谓的粘包/拆包问题。</p>
+<p>解决方案：</p>
+<p>①消息定长，例如每个报文的大小固定为200个字节，如果不够，空位补空格。</p>
+<p>②在包尾部增加特殊字符进行分割，例如加回车等。</p>
+<p>③将消息分为消息头和消息体，在消息头中包含表示消息总长度的字段，然后进行业务逻辑的处理。</p>
+<p>Netty中解决TCP粘包/拆包的方法：</p>
+<p>①分隔符类：DelimiterBasedFrameDecoder（自定义分隔符）</p>
+<p>②定长：FixedLengthFrameDecoder</p>
+<p><img src="/2018/07/26/Netty——基本概念/2.png" alt="这里写图片描述"></p>
+<p>6.Netty编解码技术</p>
+<p>通常我们也习惯将编码（Encode）成为序列化，它将数据序列化为字节数组，用于网络传输、数据持久化或者其他用途。反之，解码（Decode）/反序列化（deserialization）</p>
+<p>把从网络、磁盘等读取的字节数组还原成原始对象（通常是原始对象的拷贝），以方便后续的业务逻辑操作。进行远程跨进程服务调用时（例如RPC调用），需要使用特定的编解码技术，对需要进行网络传输的对象做编码或者解码，以便完成远程调用。</p>
+<p>主流的编解码框架：</p>
+<p>①JBoss的Marshalling包</p>
+<p>②google的Protobuf</p>
+<p>③基于Protobuf的Kyro</p>
+<p>④MessagePack框架</p>
+<p>7.最佳实践</p>
+<p>（1）数据通信</p>
+<p>我们需要了解在真正项目中如何使用Netty，大体上对于一些参数设置都是根据服务器性能决定的。我们需要考虑的问题是两台机器（甚至多台）使用Netty怎样进行通信。</p>
+<p>大体上分为三种：</p>
+<p>①使用长连接通道不断开的形式进行通信，也就是服务器和客户端的通道一直处于开启状态，如果服务器性能足够好，并且客户端数量也比较上的情况下，推荐这种方式。</p>
+<p>②一次性批量提交数据，采用短连接方式。也就是说先把数据保存到本地临时缓存区或者临时表，当达到界值时进行一次性批量提交，又或者根据定时任务轮询提交，</p>
+<p>这种情况的弊端是做不到实时性传输，对实时性要求不高的应用程序中推荐使用。</p>
+<p>③使用一种特殊的长连接，在某一指定时间段内，服务器与某台客户端没有任何通信，则断开连接。下次连接则是客户端向服务器发送请求的时候，再次建立连接。</p>
+<p>在这里将介绍使用Netty实现第三种方式的连接，但是我们需要考虑两个因素：</p>
+<p>①如何在超时（即服务器和客户端没有任何通信）后关闭通道？关闭通道后又如何再次建立连接？</p>
+<p>②客户端宕机时，我们无需考虑，下次重启客户端之后就可以与服务器建立连接，但服务器宕机时，客户端如何与服务器端通信？</p>
+<p>8.心跳检测</p>
+<p>我们使用Socket通信一般经常会处理多个服务器之间的心跳检测，一般来讲我们去维护服务器集群，肯定要有一台或多台服务器主机（Master），然后还应该有N台（Slave），那么我们的主机肯定要时时刻刻知道自己下面的从服务器的各方面情况，然后进行实时监控的功能。这个在分布式架构里交做心跳检测或者心跳监控。最佳处理方案是使用一些通信框架进行实现，Netty就可以做这样的事。</p>
+<p>原文链接（含有具体代码示例）：<a href="http://blog.csdn.net/haoyuyang/article/details/53243785" target="_blank" rel="noopener">http://blog.csdn.net/haoyuyang/article/details/53243785</a></p>
+
+        </section>
+    </article>
+    
+        <!-- disqus 评论框 start -->
+        <div class="comment">
+            <div id="disqus_thread" class="disqus-thread">
+              <i>Loading comments box needs to over the wall</i>
+            </div>
+        </div>
+        <!-- disqus 评论框 end -->
+    
+    
+        <!-- livere 评论框 start -->
+        <div class="comment">
+            <div id="lv-container" data-id="city" data-uid="your_livere_uid"></div>
+        </div>
+        <!-- livere 评论框 end -->
+        
+  </div>
+  <aside>
+    
+  </aside>
+</main>
+
+<!-- disqus 公共JS代码 -->
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = "your_disqus_shortname";
+  var disqus_identifier = "http://yoursite.com/2018/07/26/Netty——基本概念/";
+  var disqus_url = "http://yoursite.com/2018/07/26/Netty——基本概念/";
+
+  isAgent(getDisqus)
+
+  // determine user agent in China
+  function isAgent(cb) {
+    var url = '//graph.facebook.com/feed?callback=h';
+    var xhr = new XMLHttpRequest();
+    var called = false;
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+      called = true;
+      cb(true);
+      }
+    };
+    xhr.send();
+    // timeout 1s, this facebook API is very fast.
+    setTimeout(function() {
+      if (!called) {
+      xhr.abort();
+      cb(false)
+      }
+    }, 1000);
+  }
+
+  function getDisqus(isAgent) {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; 
+    dsq.async = true
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq)
+  }
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+<script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2018 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/lib/in-view.min.js"></script>
+<script src="/lib/lodash.min.js"></script>
+<script>
+  var isDown = true
+  var oldY = 0
+  inView.offset(50)
+
+  document.body.addEventListener('touchstart', function(){});
+  
+  window.addEventListener('scroll', _.throttle(e => {
+    var currentY = window.scrollY
+    if((oldY - currentY) < 0) {
+      isDown = true
+    } else {
+      isDown = false
+    }
+    oldY = currentY
+  }, 250))
+
+  $("article img").each(function() {
+      var strA = "<a data-fancybox='gallery' href='" + this.src + "'></a>";
+      $(this).wrapAll(strA);
+  });
+
+  $('.toc-link').each(function() {
+      var href = $(this).attr("href");
+      
+      inView(href).on('exit', () => {
+        if (isDown) {
+          handleActive(href)
+        }
+      })
+
+      inView(href).on('enter', () => {
+        if (!isDown) {
+          handleActive(href)
+        }
+      })
+
+      this.onclick = function(e) {
+        var pos = $(href).offset().top - 10;
+        $("html,body").animate({scrollTop: pos}, 300);
+        setTimeout(() => {
+          handleActive(href)
+        }, 350)
+        return false
+      }
+  })
+
+  function handleActive(href) {
+    document.querySelectorAll('.toc-link').forEach(elm => {
+      elm.classList.remove('active')
+    })
+    document.querySelector(".toc [href='"+ href +"']").classList.add('active')
+  }
+</script>
+<script src="/lib/jquery.fancybox.min.js"></script>
+
+
+</body>
+</html>
