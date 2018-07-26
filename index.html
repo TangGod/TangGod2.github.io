@@ -1,257 +1,181 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Hexo</title>
+<html lang=zh-Hans>
+  <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="note">
+  <meta name="keywords" content="">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="icon" href="/favicon.ico">
   
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
-
+    
+  <title>TangGodBlogs</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
+  <header>
+  <div class="header-container">
+    <a class='logo' href="/">
+      <span>TangGodBlogs</span>
+    </a>
+    <ul class="right-header">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
+        <li class="nav-item">
+          
+            <a href="/" class="item-link active">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
   </div>
 </header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-高并发编程-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/26/高并发编程-1/" class="article-date">
-  <time datetime="2018-07-26T05:32:58.283Z" itemprop="datePublished">2018-07-26</time>
-</a>
+
+  <main id='index'>
+  <div class="posts-list">
+    
+      <section>
+        <a href="/2018/07/26/高并发编程-1 - 副本 (2)/">
+          <h3 class='post-head'>
+            Untitled
+          </h3>
+        </a>
+        
+        <div class="post-content">
+          
+            
+              
+                <p>概念：</p>
+              
+          
+        </div>
+        <div class='post-meta'>
+          <i class="fa fa-calendar" aria-hidden="true"></i> <time>2018/07/26</time>
+          
+          
+        </div>
+      </section>
+    
+      <section>
+        <a href="/2018/07/26/高并发编程-1 - 副本/">
+          <h3 class='post-head'>
+            Untitled
+          </h3>
+        </a>
+        
+        <div class="post-content">
+          
+            
+              
+                <p>概念：</p>
+              
+          
+        </div>
+        <div class='post-meta'>
+          <i class="fa fa-calendar" aria-hidden="true"></i> <time>2018/07/26</time>
+          
+          
+        </div>
+      </section>
+    
+      <section>
+        <a href="/2018/07/26/高并发编程-1/">
+          <h3 class='post-head'>
+            Untitled
+          </h3>
+        </a>
+        
+        <div class="post-content">
+          
+            
+              
+                <p>概念：</p>
+              
+          
+        </div>
+        <div class='post-meta'>
+          <i class="fa fa-calendar" aria-hidden="true"></i> <time>2018/07/26</time>
+          
+          
+        </div>
+      </section>
     
   </div>
-  <div class="article-inner">
+  <aside>
     
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>概念：</p>
-<pre><code>1-继承Thread类创建线程类
-
-2-通过Runable接口创建线程类
-
-3- 通过Callable和FutureTask创建线程
-
-        a. 创建Callable接口的实现类，并实现call()方法；
-
-        b. 创建Callable实现类的实例，使用FutureTask类来包装Callable对象，该FutureTask对象封装了该Callback对象的call()方法的返回值；
-
-        c. 使用FutureTask对象作为Thread对象的target创建并启动新线程；
-
-        d. 调用FutureTask对象的get()方法来获得子线程执行结束后的返回值。
-
-4-通过线程池创建线程
-</code></pre><p>为什么要用start()来启动线程,而不是run()？</p>
-<pre><code>1-java应用程序的main函数是一个线程，是被JVM启动的时候调用，线程的名字叫main
-
-2-实现一个线程，必须创建Thread实例，override run方法，并且调用start方法
-
-3-在JVM启动后，实际上有多个线程，但是至少有一个非守护线程
-
-4-当你调用一个线程start方法的时候，此时至少有两个线程，一个是调用你的线程(比如main方法调用的，就是main线程)，
-
-    还有一个执行run方法的线程
-
-5-线程的生命周期分为new,runnable,running,block,terminated.
-</code></pre><p>多线程场景</p>
-<pre><code>银行叫号的机器(很多个)
-</code></pre><p>runnable采用的什么设计模式？</p>
-<pre><code>-策略模式
-
-    算法和业务逻辑分开
-</code></pre><p>threadGroup</p>
-<pre><code>1-创建线程对象Thread,默认有一个线程名，以Thread-开头，从0开始计数
-
-        构造函数 Thread()
-
-            名称如下：
-
-                Thread-0
-
-                Thread-1
-
-                Thread-2
-
-2-如果在构造Thread的时候没有传递Runnable或者没有复写Thread的run方法，该Thread将不会调用任何东西，如果传递了Runnable接口
-
-    的实例，或者复写了Thread的run方法，则会执行该方法的逻辑单元(逻辑代码)
-
-3-如果构造线程对象时未传入ThreadGroup，Thread会默认获取父线程的ThreadGroup作为该线程的ThreadGroup，此时子线程和父线程将会
-
-    在同一个threadGroup中
-
-    构造函数如下：
-
-        Thread()
-
-        Thread(Runnable target)
-
-        Thread(Runnable target,String name)
-
-        Thread(String name)
-
-        Thread(String group,Runnable target,String name,long stackSize)    
-
-    4-构造Thread的时候传入stacksize代表着该线程占用的stack大小，如果没有指定stacksize的大小，默认是0，0代表着会忽略该参数，
-
-        该参数会被JNI函数去使用
-
-        需要注意：该参数有一些平台有效，在有些平台无效
-
-5- join方法
-</code></pre><p>join<br>6-检查线程死锁</p>
-<p>7-锁的类别</p>
-<pre><code>-this：
-</code></pre><p>多个方法都使用synchronized关键词修饰，或在方法中指定使用this时,共用一个this锁，也就是说，同一时间，使用了this的所有方法会变成串型执行。（定义的成员变量当做锁参数，传在synchronized中也同理）</p>
-<p>-class：</p>
-<ol>
-<li><p>如果多线程同时访问同一类的 类锁（synchronized 修饰的静态方法）以及对象锁（synchronized 修饰的非静态方法）这两个方法执行是异步的，原因：类锁和对象锁是2中不同的锁。 </p>
-</li>
-<li><p>类锁对该类的所有对象都能起作用，而对象锁不能。</p>
-</li>
-</ol>
-<p>8-线程通讯</p>
-<p>例子：生产者消费者</p>
-<p>wait和sleep的区别：</p>
-<pre><code>-sleep是Thread的，wait是Object的
-
--sleep不会释放锁，wait会释放锁
-
--sleep可以不定义同步代码块，wait必须加同步
-
--sleep不需要被唤醒，wait必须被唤醒（设置自动唤醒时间除外）
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/26/高并发编程-1/" data-id="cjk24gyrq0000t8uaopn1buj7" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/07/26/高并发编程-1/">(no title)</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
+    <div class="search">
+      <div class="content">
+        <form action="//www.google.com/search" target="_blank" class="search-form">
+          <input type="text" name="q" maxlength="20" placeholder=Search>
+          <input type="hidden" name='sitesearch' value="http://yoursite.com">
+        </form>
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+    
+    
+      <div class="avatar">
+        <img src="http://olnzpdi2u.bkt.clouddn.com/avatar.jpg" alt="avatar">
+          
+            <div class="content">
+                <span>aside-description</span>
+            </div>
+          
+      </div>
+    
+    
+    
+      <div class="links">
+        <h1>
+          Blogroll
+        </h1>
+        <div class="content">
+          
+            <a href="https://www.baidu.com/" target="_blank">百度</a>
+          
+            <a href="https://www.google.com/" target="_blank">谷歌</a>
+          
+            <a href="https://www.zhihu.com/" target="_blank">知乎</a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</main>
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2018 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
     </div>
   </div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-
-<script src="/js/script.js"></script>
-
-  </div>
 </body>
 </html>
