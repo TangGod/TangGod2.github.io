@@ -438,23 +438,16 @@ java Socket 短连接和长连接的区别
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/07/26/RocketMQ基本概念/" >
+        <a class="abstract-title" href = "/2018/07/26/Serializable/" >
             
-                <span>RocketMQ基本概念</span>
+                <span>Serializable</span>
         </a>
         <div class="abstract-content">
-            分布式消息系统作为实现分布式系统可扩展、可伸缩性的关键组件，需要具有高吞吐量、高可用等特点。而谈到消息系统的设计，就回避不了两个问题：
-
-
-消息的顺序问题
-
-消息的重复问题
-
-
-
-RocketMQ作为阿里开源的一款高性能、高吞吐量的消息中间件，它是怎样来解决这两个问题的？RocketMQ 有哪些关键特性？其实现原理是怎样的？
-关键特性以及其实现原理一、顺序消息消息有序指的是可以按照消息的发送顺序来消费。例如：一笔订单产生了 3 条消息，分别是订单创建、订单付款、订单完成。消费时，要按照顺序依次消费才有意义。与此同时多笔订单之间又是可以并行消费的。首先来看如下示例：
-假如生产者产生了2条消...
+            Java序列化接口Serializable的作用：
+将需要被序列化的类实现Serializable接口，该接口没有需要实现的方法，implements Serializable只是为了标注该对象是可被序列化的
+一个对象有对应的一些属性,把这个对象保存在硬盘上的过程叫做”持久化”.
+对象的默认序列化机制写入的内容是：对象的类，类签名，以及非瞬态和非静态字段的值。(因为静态static的东西在方法区.)
+序列化能把堆内存中的对象的生命周期延长,做持久化操作.当下次再需要这个对象的时候,我们不用new了,直接从硬盘中读取就可以了.(存储到硬盘是一个文件,不需要我们去解析,如果用记事本打开解析会...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -989,7 +982,7 @@ Socket和ServerSocket类库位于java.net包中。ServerSocket用于服务器端
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2018/07/26/Serializable/" >Serializable</a>
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2018/07/26/RocketMQ基本概念/" >RocketMQ基本概念</a>
         </li>
     
     
@@ -1029,7 +1022,7 @@ Socket和ServerSocket类库位于java.net包中。ServerSocket用于服务器端
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2018/07/26/RocketMQ基本概念/" >RocketMQ基本概念</a>
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2018/07/26/Serializable/" >Serializable</a>
         </li>
     
     
